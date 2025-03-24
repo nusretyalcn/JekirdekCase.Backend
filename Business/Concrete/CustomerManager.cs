@@ -1,8 +1,10 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
 using Core.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using FluentValidation;
 using LinqKit;
 using System;
 using System.Collections.Generic;
@@ -59,6 +61,13 @@ namespace Business.Concrete
 
         public IResult Add(Customer customer)
         {
+            var context = new ValidationContext<Customer>(customer);
+            CustomerValidator productValidator = new CustomerValidator();
+            var result = productValidator.Validate(context);
+            if (!result.IsValid)
+            {
+                throw new ValidationException(result.Errors);
+            }
 
             DateOnly.FromDateTime(DateTime.UtcNow);
             _customerDal.Add(customer);
