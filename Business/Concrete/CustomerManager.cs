@@ -1,7 +1,7 @@
 ﻿using Business.Abstract;
 using Business.ValidationRules.FluentValidation;
 using Core.CrossCuttingConcerns;
-using Core.Results;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
