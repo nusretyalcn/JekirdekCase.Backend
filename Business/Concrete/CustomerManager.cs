@@ -53,7 +53,7 @@ namespace Business.Concrete
             // Filtre uygulama
 
 
-            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(predicate), "Müşteriler listelendi");
+            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(predicate).OrderByDescending(c => c.Id).ToList(), "Müşteriler listelendi");
         }
 
 
