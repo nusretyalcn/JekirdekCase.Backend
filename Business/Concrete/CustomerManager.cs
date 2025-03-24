@@ -2,9 +2,12 @@
 using Core.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
+using LinqKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,9 +22,38 @@ namespace Business.Concrete
             _customerDal = customerDal;
         }
 
-        public IDataResult<List<Customer>> GetAll()
+        public IDataResult<List<Customer>> GetAll(CustomerFilterDto customerFilterDto)
         {
-            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), "Müşteriler listelendi");
+            Expression<Func<Customer, bool>> predicate = c => true; // Başlangıçta tüm veriyi getir
+
+            // Müşteri adı filtresi
+            if (!string.IsNullOrEmpty(customerFilterDto.Name))
+            {
+                predicate = predicate.And(c => c.FirstName.Contains(customerFilterDto.Name));
+            }
+
+            // Bölge filtresi
+            if (!string.IsNullOrEmpty(customerFilterDto.Region))
+            {
+                predicate = predicate.And(c => c.Region.Contains(customerFilterDto.Region));
+            }
+
+            // Başlangıç tarihi filtresi
+            if (customerFilterDto.StartDate.HasValue)
+            {
+                predicate = predicate.And(c => c.RegistrationDate >= customerFilterDto.StartDate.Value);
+            }
+
+            // Bitiş tarihi filtresi
+            if (customerFilterDto.EndDate.HasValue)
+            {
+                predicate = predicate.And(c => c.RegistrationDate <= customerFilterDto.EndDate.Value);
+            }
+
+            // Filtre uygulama
+
+
+            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(predicate), "Müşteriler listelendi");
         }
 
 

@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,9 +19,9 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("getall")]
-        public IActionResult GetAll()
+        public IActionResult GetAll([FromQuery] CustomerFilterDto customerFilterDto)
         {
-            var result = _customerService.GetAll();
+            var result = _customerService.GetAll(customerFilterDto);
             if (result.Success)
             {
                 return Ok(result);
