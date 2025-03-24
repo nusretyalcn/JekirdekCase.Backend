@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns;
 using Core.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -61,14 +62,7 @@ namespace Business.Concrete
 
         public IResult Add(Customer customer)
         {
-            var context = new ValidationContext<Customer>(customer);
-            CustomerValidator productValidator = new CustomerValidator();
-            var result = productValidator.Validate(context);
-            if (!result.IsValid)
-            {
-                throw new ValidationException(result.Errors);
-            }
-
+            ValidationTool.Validate(new CustomerValidator(), customer);
             DateOnly.FromDateTime(DateTime.UtcNow);
             _customerDal.Add(customer);
             return new SuccessResult("Müşteri eklendi");
