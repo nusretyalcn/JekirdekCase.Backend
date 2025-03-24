@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -18,28 +19,30 @@ namespace Business.Concrete
             _customerDal = customerDal;
         }
 
-        public List<Customer> GetAll()
+        public IDataResult<List<Customer>> GetAll()
         {
-            var result = _customerDal.GetAll();
-            return result.ToList();
+            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), "Müşteriler listelendi");
         }
 
 
-        public void Add(Customer customer)
+        public IResult Add(Customer customer)
         {
 
             DateOnly.FromDateTime(DateTime.UtcNow);
             _customerDal.Add(customer);
+            return new SuccessResult("Müşteri eklendi");
         }
 
-        public void Delete(Customer customer)
-        {
-            _customerDal.Delete(customer);
-        }
-
-        public void Update(Customer customer)
+        public IResult Update(Customer customer)
         {
             _customerDal.Update(customer);
+            return new SuccessResult("Müşteri Güncellendi");
+        }
+
+        public IResult Delete(Customer customer)
+        {
+            _customerDal.Delete(customer);
+            return new SuccessResult("Müşteri Silindi");
         }
     }
 }
