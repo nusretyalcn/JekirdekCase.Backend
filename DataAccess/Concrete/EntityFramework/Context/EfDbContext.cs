@@ -12,12 +12,13 @@ namespace DataAccess.Concrete.EntityFramework.Context
 {
     public class EfDbContext:DbContext
     {
-        private readonly IConfiguration Configuration;
-
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
+            optionsBuilder.UseNpgsql("Host=localhost;" +
+                "Port=5432;" +
+                "Database=CrmSystem;" +
+                "Username=postgres;" +
+                "Password=123456789");
         }
 
 

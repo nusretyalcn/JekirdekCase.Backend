@@ -18,7 +18,7 @@ namespace Business.Concrete
             _customerDal = customerDal;
         }
 
-        public List<Customer> GetList()
+        public List<Customer> GetAll()
         {
             var result = _customerDal.GetAll();
             return result.ToList();
