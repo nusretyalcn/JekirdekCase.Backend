@@ -2,6 +2,7 @@
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects;
 using Core.CrossCuttingConcerns;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -63,6 +64,12 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CustomerValidator))]
         public IResult Add(Customer customer)
         {
+            IResult result = BusinessRules.Run(CheckIfCustomerExists(customer.Email));
+            if (result != null)
+            {
+                return result;
+            }
+
             DateOnly.FromDateTime(DateTime.UtcNow);
             _customerDal.Add(customer);
             return new SuccessResult("Müşteri eklendi");
@@ -81,5 +88,18 @@ namespace Business.Concrete
             _customerDal.Delete(customer);
             return new SuccessResult("Müşteri Silindi");
         }
+
+
+        private IResult CheckIfCustomerExists(string email)
+        {
+            var result = _customerDal.GetAll(p => p.Email == email).Any();
+            if (result)
+            {
+                return new ErrorResult("Müşteri zaten kayıtlı");
+            }
+
+            return new SuccessResult();
+        }
+
     }
 }
