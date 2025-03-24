@@ -14,7 +14,7 @@ namespace Core.DataAccess
     where TContext : DbContext, new()
 
     {
-        public List<TEntity> GetAll(Expression<Func<TEntity, bool>>? filter = null)
+        public IList<TEntity> GetAll(Expression<Func<TEntity, bool>>? filter = null)
         {
             using (TContext context = new TContext())
             {

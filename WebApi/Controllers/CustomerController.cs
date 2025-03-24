@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,32 +19,52 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("getall")]
-        public IActionResult GetAll()
+        public IActionResult GetAll([FromQuery] CustomerFilterDto customerFilterDto)
         {
-            var result = _customerService.GetAll();
+            var result = _customerService.GetAll(customerFilterDto);
+            if (result.Success)
+            {
                 return Ok(result);
+            }
 
+            return BadRequest(result);
+           
         }
 
         [HttpPost("add")]
         public IActionResult Add(Customer customer)
         {
-            _customerService.Add(customer);
-            return Ok();
+            var result = _customerService.Add(customer);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            
+            return BadRequest(result);
         }
 
         [HttpPost("update")]
         public IActionResult Update(Customer customer)
         {
-            _customerService.Update(customer);
-            return Ok();
+            var result = _customerService.Update(customer);
+            if(result.Success)
+            {
+                return Ok(result);
+            }
+            
+            return BadRequest(result);
         }
 
         [HttpPost("delete")]
         public IActionResult Delete(Customer customer)
         {
-            _customerService.Delete(customer);
-            return Ok();
+            var result = _customerService.Delete(customer);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            
+            return BadRequest();
         }
     }
 }
