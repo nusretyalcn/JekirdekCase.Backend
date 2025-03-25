@@ -12,7 +12,7 @@ namespace Business.Abstract
     public interface ICustomerService
     {
         IDataResult<List<Customer>> GetAll(CustomerFilterDto customerFilterDto);
-        IResult Add(Customer customer);
+        IResult Add(CustomerDto customerDto);
         IResult Update(Customer customer);
         IResult Delete(Customer customer);
     }

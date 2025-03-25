@@ -28,6 +28,7 @@ namespace Business.Concrete
             _customerDal = customerDal;
         }
 
+        [SecuredOperation("admin")]
         public IDataResult<List<Customer>> GetAll(CustomerFilterDto customerFilterDto)
         {
             Expression<Func<Customer, bool>> predicate = c => true; // Başlangıçta tüm veriyi getir
@@ -62,20 +63,32 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(CustomerValidator))]
-        public IResult Add(Customer customer)
+        [SecuredOperation("admin")]
+        public IResult Add(CustomerDto customerDto)
         {
-            IResult result = BusinessRules.Run(CheckIfCustomerExists(customer.Email));
+            Customer customer = new Customer() 
+            {
+                
+                FirstName = customerDto.FirstName,
+                LastName = customerDto.LastName,
+                Email = customerDto.Email,
+                Region = customerDto.Region,
+                RegistrationDate= DateOnly.FromDateTime(DateTime.UtcNow)
+        };
+
+            IResult result = BusinessRules.Run(CheckIfCustomerExists(customerDto.Email));
             if (result != null)
             {
                 return result;
             }
 
-            DateOnly.FromDateTime(DateTime.UtcNow);
+            
             _customerDal.Add(customer);
             return new SuccessResult("Müşteri eklendi");
         }
 
         [ValidationAspect(typeof(CustomerValidator))]
+        [SecuredOperation("admin")]
         public IResult Update(Customer customer)
         {
             _customerDal.Update(customer);
@@ -83,6 +96,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(CustomerValidator))]
+        [SecuredOperation("admin")]
         public IResult Delete(Customer customer)
         {
             _customerDal.Delete(customer);
