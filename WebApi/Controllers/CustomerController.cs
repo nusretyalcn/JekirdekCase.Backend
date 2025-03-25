@@ -32,9 +32,9 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Customer customer)
+        public IActionResult Add(CustomerDto customerDto)
         {
-            var result = _customerService.Add(customer);
+            var result = _customerService.Add(customerDto);
             if (result.Success)
             {
                 return Ok(result);
