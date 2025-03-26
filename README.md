@@ -107,7 +107,7 @@ The logs for the Web API are saved to a file located at:Web Api/logs
 | Column Name        | Data Type          | Description          |
 |--------------------|--------------------|----------------------|
 | **Id**             | integer (Primary Key) | Operation Claim ID  |
-| **FirstName**      | character varying   | Role Name |
+| **Name**      | character varying   | Role Name |
 
 ---
 
