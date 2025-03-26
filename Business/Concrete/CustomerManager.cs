@@ -28,6 +28,7 @@ namespace Business.Concrete
             _customerDal = customerDal;
         }
 
+        [LogAspect]
         [SecuredOperation("admin")]
         public IDataResult<List<Customer>> GetAll(CustomerFilterDto customerFilterDto)
         {
@@ -74,6 +75,7 @@ namespace Business.Concrete
 
         [ValidationAspect(typeof(CustomerValidator))]
         [SecuredOperation("admin")]
+        [LogAspect]
         public IResult Add(CustomerDto customerDto)
         {
             Customer customer = new Customer() 
@@ -99,6 +101,7 @@ namespace Business.Concrete
 
         [ValidationAspect(typeof(CustomerValidator))]
         [SecuredOperation("admin")]
+        [LogAspect]
         public IResult Update(Customer customer)
         {
             _customerDal.Update(customer);
@@ -107,6 +110,7 @@ namespace Business.Concrete
 
         [ValidationAspect(typeof(CustomerValidator))]
         [SecuredOperation("admin")]
+        [LogAspect]
         public IResult Delete(Customer customer)
         {
             _customerDal.Delete(customer);
