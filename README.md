@@ -9,7 +9,6 @@ Customer Management System is a comprehensive customer management system built u
 - **Backend Development**: Built on .NET Core 7.0, using Generic Repository, Aspect-Oriented Programming, and Fluent Validation for clean, maintainable, and scalable code.
 - **Authentication & Security**: JWT authentication for secure access control and protecting sensitive customer data.
 - **Dependency Injection**: Uses Autofac for efficient and scalable dependency injection, improving flexibility and maintainability of the application.
-- **Transaction Management**: Custom aspects to handle transaction consistency and reliability during database operations, ensuring data integrity when managing customer information.
 
 ## Key Technologies
 
@@ -20,6 +19,106 @@ Customer Management System is a comprehensive customer management system built u
 - **Entity Framework**
 - **JWT Authentication**
 - **Autofac**
+
+  ## Changing the Connection String in EfDbContext.cs
+
+To configure the connection string for your database, you need to modify the connection string in the `EfDbContext.cs` file. Here's how you can do it:
+
+1. Open the file: `JekirdekCase.Backend\DataAccess\Concrete\EntityFramework\Context\EfDbContext.cs`.
+   
+2. Locate the line where the connection string is set. It will look something like this:
+
+   ```csharp
+   optionsBuilder.UseNpgsql("Your_Connection_String_Here");
+
+## CORS Policy
+
+The CORS policy is configured to allow requests from specific origins. The frontend host address is defined in the `Program.cs` file inside the `policy.WithOrigins("http://localhost:3000")` line.
+
+You can modify this URL to match the address of your frontend application, if needed. 
+   ```csharp
+policy.WithOrigins("http://your-frontend-url.com")
+
+   ```      
+  
+     
+           
+
+For example, if your frontend is hosted on a different address, update it like so:
+
+
+
+
+## Registering to the System
+
+To register a new user in the system, send a **POST** request to the following endpoint:
+
+**URL:** `https://localhost:7256/api/Auth/register`
+
+    ```json {
+       "email": "string",
+       "password": "string",
+       "firstName": "string",
+        "lastName": "string"
+        }   
+ 
+
+### Request Body:
+The email field must be in a valid mail format for validation rules (e.g., user@gmail.com).
+
+## Logging in Web API
+## Logging
+
+The logs for the Web API are saved to a file located at:Web Api/logs
+
+
+## PostgreSQL Tables
+
+### Customers Table
+
+| Column Name        | Data Type          | Description          |
+|--------------------|--------------------|----------------------|
+| **Id**             | integer (Primary Key) | Customer ID         |
+| **FirstName**      | character varying   | Customer First Name  |
+| **LastName**       | character varying   | Customer Last Name   |
+| **Email**          | character varying   | Customer Email       |
+| **RegistrationDate** | date             | Registration Date    |
+| **Region**         | character varying   | Customer Region      |
+
+---
+
+### Users Table
+
+| Column Name        | Data Type          | Description          |
+|--------------------|--------------------|----------------------|
+| **Id**             | integer (Primary Key) | User ID            |
+| **FirstName**      | character varying   | User First Name      |
+| **LastName**       | character varying   | User Last Name       |
+| **Email**          | character varying   | User Email           |
+| **PasswordHash**   | bytea              | Hashed Password      |
+| **PasswordSalt**   | bytea              | Salt for Password    |
+| **CreatedAt**      | timestamp without time zone | User Creation Time |
+| **UpdatedAt**      | timestamp without time zone | Last Update Time   |
+
+---
+
+### OperationClaims Table
+
+| Column Name        | Data Type          | Description          |
+|--------------------|--------------------|----------------------|
+| **Id**             | integer (Primary Key) | Operation Claim ID  |
+| **FirstName**      | character varying   | Operation Claim Name |
+
+---
+
+### UserOperationClaims Table
+
+| Column Name           | Data Type          | Description          |
+|-----------------------|--------------------|----------------------|
+| **Id**                | integer (Primary Key) | User-Operation Claim ID |
+| **UserId**            | integer            | Foreign Key to Users Table |
+| **OperationClaimId**  | integer            | Foreign Key to OperationClaims Table |
+
 
 ## Getting Started
 
@@ -34,3 +133,5 @@ Customer Management System is a comprehensive customer management system built u
 3. Run the project:
    ```bash
    dotnet run
+
+
