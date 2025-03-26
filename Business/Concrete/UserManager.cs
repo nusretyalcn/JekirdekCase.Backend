@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects;
 using Core.Entities;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -22,7 +24,8 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<OperationClaim>>(_userDal.GetClaims(user));
         }
-
+        [ValidationAspect(typeof(UserValidator))]
+        [LogAspect]
         public IResult Add(User user)
         {
             user.CreatedAt = DateTime.UtcNow;
