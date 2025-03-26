@@ -34,9 +34,19 @@ namespace Business.Concrete
             Expression<Func<Customer, bool>> predicate = c => true; // Başlangıçta tüm veriyi getir
 
             // Müşteri adı filtresi
-            if (!string.IsNullOrEmpty(customerFilterDto.Name))
+            if (!string.IsNullOrEmpty(customerFilterDto.FirstName))
             {
-                predicate = predicate.And(c => c.FirstName.Contains(customerFilterDto.Name));
+                predicate = predicate.And(c => c.FirstName.Contains(customerFilterDto.FirstName));
+            }
+            
+            if (!string.IsNullOrEmpty(customerFilterDto.LastName))
+            {
+                predicate = predicate.And(c => c.LastName.Contains(customerFilterDto.LastName));
+            }
+
+            if (!string.IsNullOrEmpty(customerFilterDto.Email))
+            {
+                predicate = predicate.And(c => c.Email.Contains(customerFilterDto.Email));
             }
 
             // Bölge filtresi
@@ -112,7 +122,7 @@ namespace Business.Concrete
                 return new ErrorResult("Müşteri zaten kayıtlı");
             }
 
-            return new SuccessResult();
+            return new SuccessResult(); 
         }
 
     }
