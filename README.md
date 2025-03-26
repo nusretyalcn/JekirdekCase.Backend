@@ -74,7 +74,7 @@ The logs for the Web API are saved to a file located at:Web Api/logs
 
 ## PostgreSQL Tables
 
-### Customers Table
+### Customers
 
 | Column Name        | Data Type          | Description          |
 |--------------------|--------------------|----------------------|
@@ -87,7 +87,7 @@ The logs for the Web API are saved to a file located at:Web Api/logs
 
 ---
 
-### Users Table
+### Users
 
 | Column Name        | Data Type          | Description          |
 |--------------------|--------------------|----------------------|
@@ -102,7 +102,7 @@ The logs for the Web API are saved to a file located at:Web Api/logs
 
 ---
 
-### OperationClaims Table
+### OperationClaims
 
 | Column Name        | Data Type          | Description          |
 |--------------------|--------------------|----------------------|
@@ -111,7 +111,7 @@ The logs for the Web API are saved to a file located at:Web Api/logs
 
 ---
 
-### UserOperationClaims Table
+### UserOperationClaims
 
 | Column Name           | Data Type          | Description          |
 |-----------------------|--------------------|----------------------|
