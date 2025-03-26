@@ -107,7 +107,7 @@ The logs for the Web API are saved to a file located at:Web Api/logs
 | Column Name        | Data Type          | Description          |
 |--------------------|--------------------|----------------------|
 | **Id**             | integer (Primary Key) | Operation Claim ID  |
-| **FirstName**      | character varying   | Operation Claim Name |
+| **FirstName**      | character varying   | Role Name |
 
 ---
 
@@ -116,8 +116,8 @@ The logs for the Web API are saved to a file located at:Web Api/logs
 | Column Name           | Data Type          | Description          |
 |-----------------------|--------------------|----------------------|
 | **Id**                | integer (Primary Key) | User-Operation Claim ID |
-| **UserId**            | integer            | Foreign Key to Users Table |
-| **OperationClaimId**  | integer            | Foreign Key to OperationClaims Table |
+| **UserId**            | integer            | UserId For Role|
+| **OperationClaimId**  | integer            | Role Id |
 
 
 ## Getting Started
